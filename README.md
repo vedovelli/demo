@@ -1,61 +1,116 @@
-# Welcome to React Router!
+# Bem-vindo ao React Router!
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Um template moderno e pronto para produção para construção de aplicações React full-stack usando React Router.
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
 
-## Features
+## Funcionalidades
 
 - 🚀 Server-side rendering
 - ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- 📦 Bundling e otimização de assets
+- 🔄 Carregamento de dados e mutations
+- 🔒 TypeScript por padrão
+- 🎉 TailwindCSS para estilização
+- 📖 [Documentação do React Router](https://reactrouter.com/)
 
-## Getting Started
+## Começando
 
-### Installation
+### Instalação
 
-Install the dependencies:
+Instale as dependências:
 
 ```bash
 npm install
 ```
 
-### Development
+### Desenvolvimento
 
-Start the development server with HMR:
+Inicie o servidor de desenvolvimento com HMR:
 
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Sua aplicação estará disponível em `http://localhost:5173`.
 
-## Building for Production
+## Gerenciamento de Database com Prisma
 
-Create a production build:
+Este projeto usa [Prisma](https://www.prisma.io/) como ORM para gerenciamento de database. Abaixo estão os comandos essenciais do Prisma que você precisará:
+
+### Gerar Prisma Client
+
+Após qualquer alteração no seu Prisma schema (`schema.prisma`), você precisa regenerar o Prisma Client:
+
+```bash
+npx prisma generate
+```
+
+Este comando:
+
+- Lê seu arquivo de Prisma schema
+- Gera tipos TypeScript e métodos personalizados para seu schema
+- Cria a biblioteca Prisma Client em `node_modules/@prisma/client`
+
+### Enviar Alterações do Schema para o Database
+
+Para desenvolvimento e prototipagem, você pode enviar suas alterações de schema diretamente para o database:
+
+```bash
+npx prisma db push
+```
+
+Este comando:
+
+- Sincroniza seu Prisma schema com o schema do database
+- Cria ou atualiza tabelas do database baseadas nos seus models
+- Não cria arquivos de migration (útil para prototipagem rápida)
+- **Nota:** Use com cuidado, pois pode causar perda de dados em alguns cenários
+
+### Workflow de Desenvolvimento
+
+Para um workflow típico de desenvolvimento:
+
+1. Modifique seu arquivo `schema.prisma`
+2. Envie as alterações para o database: `npx prisma db push`
+3. Gere o Prisma Client atualizado: `npx prisma generate`
+
+### Migrations de Produção
+
+Para ambientes de produção, considere usar Prisma Migrate ao invés de `db push`:
+
+```bash
+# Criar e aplicar uma nova migration
+npx prisma migrate dev --name migration_name
+
+# Deploy de migrations em produção
+npx prisma migrate deploy
+```
+
+Para mais informações, visite a [documentação do Prisma](https://www.prisma.io/docs/).
+
+## Build para Produção
+
+Crie um build de produção:
 
 ```bash
 npm run build
 ```
 
-## Deployment
+## Deploy
 
-### Docker Deployment
+### Deploy com Docker
 
-To build and run using Docker:
+Para fazer build e executar usando Docker:
 
 ```bash
 docker build -t my-app .
 
-# Run the container
+# Executar o container
 docker run -p 3000:3000 my-app
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+A aplicação containerizada pode ser deployada em qualquer plataforma que suporte Docker, incluindo:
 
 - AWS ECS
 - Google Cloud Run
@@ -64,24 +119,24 @@ The containerized application can be deployed to any platform that supports Dock
 - Fly.io
 - Railway
 
-### DIY Deployment
+### Deploy Manual
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+Se você está familiarizado com deploy de aplicações Node, o servidor de aplicação integrado está pronto para produção.
 
-Make sure to deploy the output of `npm run build`
+Certifique-se de fazer deploy da saída do `npm run build`
 
 ```
 ├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
+├── package-lock.json (ou pnpm-lock.yaml, ou bun.lockb)
 ├── build/
 │   ├── client/    # Static assets
 │   └── server/    # Server-side code
 ```
 
-## Styling
+## Estilização
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+Este template vem com [Tailwind CSS](https://tailwindcss.com/) já configurado para uma experiência inicial simples e padrão. Você pode usar qualquer framework CSS de sua preferência.
 
 ---
 
-Built with ❤️ using React Router.
+Construído com ❤️ usando React Router.
