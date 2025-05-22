@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Transaction {
+  id              Int   @id @default(autoincrement())  
+  amount          Int
+  description     String
+  type            String @default("expense") // "income" or "expense"
+  created_at      DateTime
+  payment_date    DateTime?
+
+  @@map("transactions")
+}
